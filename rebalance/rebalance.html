@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Equity Rebalance Calculator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+      function percentCalc() {
+        var x = document.getElementById("form");
+        var fundsAvailable = parseFloat(x.elements[0].value);
+        var fundsEquities = parseFloat(x.elements[1].value);
+        var fundsBonds = parseFloat(x.elements[2].value);
+        var fundsAlts = parseFloat(x.elements[3].value);
+
+        var fundsTotal = fundsAvailable + fundsEquities + fundsBonds + fundsAlts;
+        var ansTable = document.getElementById("ansTable");
+
+        var equityPercent = (fundsEquities / fundsTotal) * 100;
+        ansTable.rows[1].cells[1].innerHTML = equityPercent.toFixed(2) + "%";
+        if (equityPercent < 65) {
+          ansTable.rows[1].cells[2].innerHTML = "+";
+          ansTable.rows[1].cells[3].innerHTML = ((fundsTotal * .65) - fundsEquities).toFixed(2);
+          ansTable.rows[1].cells[4].innerHTML = (fundsTotal * .65).toFixed(2);
+        } else if (equityPercent == 65) {
+          ansTable.rows[1].cells[2].innerHTML = "=";
+          ansTable.rows[1].cells[3].innerHTML = 0;
+          ansTable.rows[1].cells[4].innerHTML = fundsEquities;
+        } else {
+          ansTable.rows[1].cells[2].innerHTML = "-";
+          ansTable.rows[1].cells[3].innerHTML = (fundsEquities - (fundsTotal * .65)).toFixed(2);
+          ansTable.rows[1].cells[4].innerHTML = (fundsTotal * .65).toFixed(2);
+        }
+
+        var bondsPercent = (fundsBonds / fundsTotal * 100);
+        ansTable.rows[2].cells[1].innerHTML = bondsPercent.toFixed(2) + "%";
+        if (bondsPercent < 35) {
+          ansTable.rows[2].cells[2].innerHTML = "+";
+          ansTable.rows[2].cells[3].innerHTML = ((fundsTotal * .30) - fundsBonds).toFixed(2);
+          ansTable.rows[2].cells[4].innerHTML = (fundsTotal * .30).toFixed(2);
+        } else if (equityPercent == 35) {
+          ansTable.rows[2].cells[2].innerHTML = "=";
+          ansTable.rows[2].cells[3].innerHTML = 0;
+          ansTable.rows[2].cells[4].innerHTML = fundsBonds;
+        } else {
+          ansTable.rows[2].cells[2].innerHTML = "-";
+          ansTable.rows[2].cells[3].innerHTML = (fundsBonds - (fundsTotal * .30)).toFixed(2);
+          ansTable.rows[2].cells[4].innerHTML = (fundsTotal * .30).toFixed(2);
+        }
+
+        var altsPercent = (fundsAlts / fundsTotal) * 100;
+        ansTable.rows[3].cells[1].innerHTML = altsPercent.toFixed(2) + "%";
+        if (altsPercent < 5) {
+          ansTable.rows[3].cells[2].innerHTML = "+";
+          ansTable.rows[3].cells[3].innerHTML = ((fundsTotal * .05) - fundsAlts).toFixed(2);
+          ansTable.rows[3].cells[4].innerHTML = (fundsTotal * .05).toFixed(2);
+        } else if (equityPercent == 5) {
+          ansTable.rows[3].cells[2].innerHTML = "=";
+          ansTable.rows[3].cells[3].innerHTML = 0;
+          ansTable.rows[2].cells[4].innerHTML = fundsAlts;
+        } else {
+          ansTable.rows[3].cells[2].innerHTML = "-";
+          ansTable.rows[3].cells[3].innerHTML = (fundsAlts - (fundsTotal * .05)).toFixed(2);
+          ansTable.rows[3].cells[4].innerHTML = (fundsTotal * .05).toFixed(2);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Equity Rebalance Calculator</h1>
+    <form id="form">
+      Funds to Deposit:<br>
+      <input type="text" name="fundAvail" value="0"><br><br>
+      Funds in Equities:<br>
+      <input type="text" name="fundEquit" value="0"><br><br>
+      Funds in Bonds/Safe:<br>
+      <input type="text" name="fundBond" value="0"><br><br>
+      Funds in Alternatives:<br>
+      <input type="text" name="fundAlt" value="0"><br><br>
+    </form>
+    <button onclick="percentCalc()">Submit</button><br><br>
+    <table id="ansTable">
+      <tr>
+        <th>Category</th>
+        <th>Old Percent</th>
+        <th>Change</th>
+        <th>Transaction Amount</th>
+        <th>New Balance</th>
+      </tr>
+      <tr>
+        <td>Equities</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Bonds</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Alternate</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+  </body>
+</html>
